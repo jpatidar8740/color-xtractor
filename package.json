@@ -1,0 +1,23 @@
+{
+  "name": "colorxtractor",
+  "version": "1.0.0",
+  "description": "It can be used to extract density of colors from an image.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpatidar8740/color-xtractor.git"
+  },
+  "author": "Jayant Patidar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpatidar8740/color-xtractor/issues"
+  },
+  "homepage": "https://github.com/jpatidar8740/color-xtractor#readme",
+  "dependencies": {
+    "color-space": "^1.16.0",
+    "jimp": "^0.6.0"
+  }
+}
