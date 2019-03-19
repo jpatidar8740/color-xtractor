@@ -119,14 +119,14 @@ const Compare = (a, b) => {
 }
 
 
-jimp.read('c.jpeg', (err, image) => {
+jimp.read(path, (err, image) => {
   if (err) return console.log(err)
   image
-  .resize(200, 200)
+  .resize(200, 200) // rwsize to 200 for beeter results.
   .quality(100)
-  .write('c1.jpeg');
+  .write("new"+path);
 
-  jimp.read('c1.jpeg', (err, image) => {  
+  jimp.read("new"+path, (err, image) => {  
     GetColor(image, (array) => console.log(array));
   })
 
