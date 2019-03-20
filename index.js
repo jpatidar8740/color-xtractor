@@ -25,12 +25,13 @@ const GetColor = (image, callback) => {
     array = []
   }
   /// We have Extracted color of each pixel in matrix array. now get web colors from json file.
+  
   return FeedWebColor(callback);
 }
 
 // transform data from json file to array (web color) in programme.
 const FeedWebColor = (callback) => {
-  fs.readFile('colors.json', (err, data) => {
+  fs.readFile('data.json', (err, data) => {
     if (err) return console.log(err)
     
     data = JSON.parse(data); // parse data (string) into js array.
@@ -38,7 +39,7 @@ const FeedWebColor = (callback) => {
     // iterate over array.
     data.forEach(element => {
       var obj = { ...element }
-      obj.count = 0
+      obj.count = 0;
       webcolors.push(obj)
     })
     // console.log('Web Colors Feeded.')
@@ -74,13 +75,13 @@ const Xtractor = (callback) => {
 // check array Lab value and map to one of the 150 colors in webcolors. mapping 
 const MapColor = array => {
   var distance = []; // array will contain distance from all 150 colors of passed array.
-
+  //console.log(array);
   webcolors.forEach(element => {
     distance.push(Distance_Cal(array, element.L));
   })
   var min = Math.min(...distance); //find minimum distance 
-
-  if ( min < 5) {
+  //console.log(min);
+  if ( min < 20) {
     var i = distance.indexOf(min); // index of that color in webcolors array;
     webcolors[i].count++ // increase count of the color.
   }
@@ -90,6 +91,7 @@ const MapColor = array => {
 const FormatOutput = (array, callback) => {
 
   // extract color which have count greater than 1.
+  //console.log(webcolors);
   array.forEach(element => {
     if(element.count>0) filterd_color.push(element);
   });
@@ -105,7 +107,7 @@ const FormatOutput = (array, callback) => {
   })
   //console.log(newArray);
   newArray.forEach(element => {
-    console.log(element.color + "  " + element.perc);
+    console.log(element.hex + "  " + element.perc);
   })
   //return callback(newArray);
 
@@ -119,16 +121,22 @@ const Compare = (a, b) => {
 }
 
 
-jimp.read(path, (err, image) => {
-  if (err) return console.log(err)
-  image
-  .resize(200, 200) // rwsize to 200 for beeter results.
-  .quality(100)
-  .write("new"+path);
+const exc = (path) => {
+  jimp.read(path, (err, image) => {
+    if (err) return console.log(err)
+    image
+    .resize(200, 200) // rwsize to 200 for beeter results.
+    .quality(100)
+    .write("new"+path);
+  
+    jimp.read("new"+path, (err, image) => {  
+      GetColor(image, (array) => console.log(array));
+    })
+  
+  });
+}
 
-  jimp.read("new"+path, (err, image) => {  
-    GetColor(image, (array) => console.log(array));
-  })
+exc(pathtofile);
+  
 
-})
 

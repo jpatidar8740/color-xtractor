@@ -18,6 +18,7 @@
   "homepage": "https://github.com/jpatidar8740/color-xtractor#readme",
   "dependencies": {
     "color-space": "^1.16.0",
+    "hex-rgb": "^4.0.0",
     "jimp": "^0.6.0"
   }
 }
